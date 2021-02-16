@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  name: mp-graphql-sample
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: mp-graphql-sample
+spec:
+  runPolicy: Serial
+  triggers:
+    -
+      type: ImageChange
+  source:
+    git:
+      ref: master
+      uri: https://github.com/geordee/sample-mp-graphql.git
+    type: Git
+  strategy:
+    type: Docker
+  output:
+    to:
+      kind: ImageStreamTag
+      name: mp-graphql-sample:latest
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mp-graphql-sample
+  labels:
+    app: mp-graphql-sample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mp-graphql-sample
+  template:
+    metadata:
+      labels:
+        app: mp-graphql-sample
+    spec:
+      containers:
+      - name: mp-graphql-sample
+        image: image-registry.openshift-image-registry.svc:5000/{project}/mp-graphql-sample:latest
+        ports:
+        - containerPort: 9080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mp-graphql-sample
+spec:
+  selector:
+    app: mp-graphql-sample
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9080
+---
+apiVersion: v1
+kind: Route
+metadata:
+  name: mp-graphql-sample
+  annotations:
+    template.openshift.io/expose-uri: http://{.spec.host}{.spec.path}
+spec:
+  tls:
+    termination: edge
+  to:
+    kind: Service
+    name: mp-graphql-sample
