@@ -41,7 +41,7 @@ You should see results similar to (but with random values):
 ## Build Container Image
 
 ```
-buildah bud -t mp-graphql-sample:latest .
+podman build -t mp-graphql-sample:latest .
 ```
 
 # Run Locally
