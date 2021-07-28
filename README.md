@@ -78,4 +78,4 @@ oc rollout restart deployment/mp-graphql-sample -n {project}
 
 ## Test
 
-Visit http://https://mp-graphql-sample-{project}.apps.{openshift.cluster}/app/graphiql.html
+Visit https://mp-graphql-sample-{project}.apps.{openshift.cluster}/app/graphiql.html
