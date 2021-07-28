@@ -44,7 +44,7 @@ You should see results similar to (but with random values):
 podman build -t mp-graphql-sample:latest .
 ```
 
-# Run Locally
+## Run Locally
 
 ```bash
 podman run -p 9080:9080 mp-graphql-sample:latest
