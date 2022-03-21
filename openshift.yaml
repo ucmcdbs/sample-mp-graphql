@@ -15,7 +15,7 @@ spec:
   source:
     git:
       ref: master
-      uri: https://github.com/geordee/sample-mp-graphql.git
+      uri: https://github.com/ucmcdbs/sample-mp-graphql.git
     type: Git
   strategy:
     type: Docker
